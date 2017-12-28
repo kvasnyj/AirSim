@@ -15,7 +15,7 @@ client.simSetSegmentationObjectID("sign[\w]*", 5, True);
 
 #get segmentation image in various formats
 responses = client.simGetImages([
-    ImageRequest(1, AirSimImageType.Segmentation)]) 
+    ImageRequest(0, AirSimImageType.Segmentation)]) 
 
 #save segmentation images in various formats
 for idx, response in enumerate(responses):

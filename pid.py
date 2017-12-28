@@ -40,10 +40,21 @@ while True:
     car_kin = car_state.kinematics_true
     print("Speed %d, Gear %d" % (car_state.speed, car_state.gear))
 
+    beta = 3
+    z = 0
+    pts = [np.array([0, -1, z]), np.array([130, -1, z]), np.array([130, 125, z]), np.array([0, 125, z]), np.array([0, -1, z]), np.array([130, -1, z]), np.array([130, -128, z]), np.array([0, -128, z]), np.array([0, -1, z])]
+    pd = car_kin.position
+    car_pt = np.array([pd.x_val, pd.y_val, pd.z_val])
+
+    dist = 10000000
+    for i in range(0, len(pts)-1):
+        dist = min(dist, np.linalg.norm(np.cross((car_pt - pts[i]), (car_pt - pts[i+1])))/np.linalg.norm(pts[i]-pts[i+1]))
+
+    cte = dist 
 
     # set the controls for car
-    car_controls.throttle = 0.2
-    car_controls.steering = 1 #UpdateError(cte)
+    car_controls.throttle = 1
+    car_controls.steering = UpdateError(cte)
     client.setCarControls(car_controls)
 
     # let car drive a bit
