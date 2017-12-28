@@ -556,6 +556,3 @@ class CarClient(AirSimClientBase, object):
     def getCarState(self):
         state_raw = self.client.call('getCarState')
         return CarState.from_msgpack(state_raw)
-
-    def getCarState2(self) -> CarState:
-        return CarState.from_msgpack(self.client.call('getCarState'))

@@ -52,7 +52,7 @@ while True:
     # get camera images from the car
     responses = client.simGetImages([
         ImageRequest(0, AirSimImageType.Scene),
-        ImageRequest(1, AirSimImageType.DepthPlanner),
+        ImageRequest(1, AirSimImageType.DepthPerspective),
         ImageRequest(2, AirSimImageType.Segmentation)
         ])
 
@@ -61,7 +61,7 @@ while True:
     for response in responses:
         if response.pixels_as_float:
             #print("Type %d, size %d" % (response.image_type, len(response.image_data_float)))
-            CarClient.write_pfm(os.path.normpath('c:/temp/airsim/py-%d-%s.png' % (response.image_type, time.strftime("%Y%m%d-%H%M%S"))), CarClient.getPfmArray(response))
+            CarClient.write_pfm(os.path.normpath('c:/temp/airsim/py-%d-%s.pfm' % (response.image_type, time.strftime("%Y%m%d-%H%M%S"))), CarClient.getPfmArray(response))
         else:
             #print("Type %d, size %d" % (response.image_type, len(response.image_data_uint8)))
             CarClient.write_file(os.path.normpath("c:/temp/airsim/py-%d-%s.png" % (response.image_type, time.strftime("%Y%m%d-%H%M%S"))), response.image_data_uint8)
